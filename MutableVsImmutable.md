@@ -260,3 +260,58 @@ list = [5, 8]
 add_list(list[:])   # Passes a copy
 print(list)         # Output: [5, 8]
 ```
+
+
+
+
+
+
+
+
+ # Assignment vs In-place Modification with Lists in Python
+
+## Example Code
+
+```python
+def add_list(number):
+    number = number + [13, 9]
+
+list = [5, 8]
+add_list(list)
+print(list)      # Output: [5, 8]
+```
+
+---
+
+## Explanation
+
+- In this code, inside the function, `number = number + [13, 9]` **creates a new list** and assigns it to the local variable `number`.
+- The original list (`list`) **outside the function is not changed**.
+- The function does **not** return anything or modify the original list in place.
+
+### Key Point
+
+- **Assignment like `number = number + [13, 9]` makes a new object**.
+- The variable `number` inside the function now points to the new list, but this does **not affect** the `list` variable outside the function.
+
+---
+
+## Visual Illustration
+
+| Step            | `number` (inside function) | `list` (outside function) | Same Object?   |
+|-----------------|---------------------------|---------------------------|---------------|
+| Before function | [5, 8]                    | [5, 8]                    | Yes           |
+| After `number = number + [13, 9]` | [5, 8, 13, 9]           | [5, 8]                    | No            |
+
+---
+
+## Summary
+
+- If you want to modify the original list, use an in-place method (like `number += [13, 9]` or `number.extend([13, 9])`).
+- If you use assignment (`number = ...`), it only changes the local reference, **not the original variable**.
+
+```python
+def add_list(number):
+    number += [13, 9]   # or number.extend([13, 9])
+```
+This version **will** modify the original list.
