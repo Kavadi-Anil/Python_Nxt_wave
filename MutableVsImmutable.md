@@ -315,3 +315,57 @@ def add_list(number):
     number += [13, 9]   # or number.extend([13, 9])
 ```
 This version **will** modify the original list.
+
+# List Mutation vs Assignment in Python Function Arguments
+
+## Example 1: In-place Modification (`+=`)
+
+```python
+def add_lists(numbers):
+    numbers += [13, 9]
+
+list_1 = [5, 8]
+add_lists(list_1)
+print(list_1)  # Output: [5, 8, 13, 9]
+```
+
+**Explanation:**  
+- `numbers += [13, 9]` modifies the list **in place**.
+- `numbers` is a reference to `list_1`, so the original list is changed.
+
+---
+
+## Example 2: Assignment (`=`)
+
+```python
+def add_lists(numbers):
+    numbers = numbers + [13, 9]
+
+list_1 = [5, 8]
+add_lists(list_1)
+print(list_1)  # Output: [5, 8]
+```
+
+**Explanation:**  
+- `numbers = numbers + [13, 9]` creates a **new list** and assigns it to the local variable `numbers`.
+- This does **not modify** `list_1` outside the function.
+
+---
+
+## Key Difference
+
+| Operation             | Modifies Original List? | Notes                                                       |
+|-----------------------|:----------------------:|-------------------------------------------------------------|
+| `numbers += [13, 9]`  | Yes                   | In-place change; both names (`numbers` and `list_1`) see it |
+| `numbers = numbers + [13, 9]` | No            | Creates new list for `numbers`; `list_1` is unchanged      |
+
+---
+
+## Visual Illustration
+
+- **In-Place (`+=`)**:  
+  Both `numbers` (inside) and `list_1` (outside) point to the same object, so the change is visible everywhere.
+- **Assignment (`=`)**:  
+  `numbers` points to a new list inside the function, so `list_1` is unaffected.
+
+---
