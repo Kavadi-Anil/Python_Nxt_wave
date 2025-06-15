@@ -198,4 +198,65 @@ def add_item(list_x=None):
 
 - Now, every call with no argument gets a fresh list!
 
+--- 
+
+
+
+
+# Understanding Mutable Arguments and References in Python
+
+## Example Code
+
+```python
+def add_list(number):
+    number += [13, 9]
+
+list = [5, 8]
+add_list(list)
+print(list)      # Output: [5, 8, 13, 9]
+```
+
 ---
+
+## Explanation
+
+- When you call `add_list(list)`, the parameter `number` inside the function refers to the **same list object** as `list` outside the function.
+- The operation `number += [13, 9]` modifies the original list **in place** (it is equivalent to `number.extend([13, 9])`).
+- Therefore, after the function call, `list` is updated to `[5, 8, 13, 9]`.
+
+---
+
+## Key Point
+
+> Both `number` (inside the function) and `list` (outside) **point to the same memory address**. Any in-place modification to `number` also affects `list`.
+
+---
+
+## Visual Illustration
+
+| Step            | `number` (inside function) | `list` (outside function) | Memory Address (id)   |
+|-----------------|---------------------------|---------------------------|-----------------------|
+| Before function | [5, 8]                    | [5, 8]                    | Same                  |
+| After `+= [13,9]` | [5, 8, 13, 9]           | [5, 8, 13, 9]             | Same                  |
+
+---
+
+## General Rule
+
+- **Mutable objects** (like lists, dicts, etc.) passed to functions can be changed inside the function, and these changes will be visible outside the function.
+- **Immutable objects** (like integers, strings, tuples) do not exhibit this behavior.
+
+---
+
+## If you want to avoid modifying the original list
+
+You can pass a copy instead:
+
+```python
+def add_list(number):
+    number += [13, 9]
+
+list = [5, 8]
+add_list(list[:])   # Passes a copy
+print(list)         # Output: [5, 8]
+```
