@@ -142,7 +142,46 @@ add_item([2,5])      # 10
    - Each uses a **new list** `[2,5]`
    - Adds `3` → `[2, 5, 3]` (each time)
 
----
+--- 
+
+
+
+
+# Understanding Mutable Default Arguments and Object IDs in Python
+
+## Code Example with Object IDs
+
+```python
+def add_item(list_x=[]):
+    list_x += [3]
+    print(list_x, id(list_x))
+
+add_item()           # 1
+add_item([2,5])      # 2
+add_item([2,5])      # 3
+add_item()           # 4
+add_item()           # 5
+add_item()           # 6
+add_item([4,5])      # 7
+add_item()           # 8
+add_item([2,5])      # 9
+add_item([2,5])      # 10
+```
+
+### Output
+
+```
+[3] 140715559318528
+[2, 5, 3] 140715557520576
+[2, 5, 3] 140715557520576
+[3, 3] 140715559318528
+[3, 3, 3] 140715559318528
+[3, 3, 3, 3] 140715559318528
+[4, 5, 3] 140715557520576
+[3, 3, 3, 3, 3] 140715559318528
+[2, 5, 3] 140715557520576
+[2, 5, 3] 140715557520576
+```
 
 ## Why Does This Matter?
 
