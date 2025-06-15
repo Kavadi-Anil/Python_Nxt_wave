@@ -11,7 +11,8 @@ increment(list_z)
 print(list_z) 
 #ouput   
 [1, 2, 1]
-[1, 2]
+[1, 2] 
+
 
 
 
