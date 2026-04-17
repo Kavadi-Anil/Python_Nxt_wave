@@ -247,36 +247,161 @@ Three methods:
 
 ---
 
-### `issubset()` — Is one set inside another?
-
+## 9. issubset()
+ 
+> Checks if one set is **completely inside** another set
+ 
 ```
-  set_1 = {1, 2, 4}
+  Nested circles — set_2 fully inside set_1:
+ 
   ┌─────────────────┐
-  │   4             │
-  │  ┌──────────┐   │
-  │  │  2   1   │   │  ← set_2 = {1, 2} is fully inside set_1
-  │  └──────────┘   │
+  │   set_1         │
+  │  3    5         │
+  │    ┌───────┐    │
+  │    │ set_2 │    │
+  │    │ 'a' 1 │    │
+  │    └───────┘    │
   └─────────────────┘
+  set_2 is SUBSET of set_1 → True ✅
+ 
+  Circles overlapping but NOT fully inside:
+  set_1 = {4, 6}   set_2 = {2, 6}
+  set_2 has element 2 which is NOT in set_1 → False ❌
 ```
-
-`set_2.issubset(set_1)` → Returns **True** if ALL elements of `set_2` are present in `set_1`
-
-| set_1 | set_2 | set_2.issubset(set_1) |
-|-------|-------|----------------------|
-| {1, 2, 4} | {1, 2} | True ✅ |
-| {1, 2, 4} | {1, 5} | False ❌ |
-
+ 
+**Syntax:** `set_2.issubset(set_1)`
+ 
+**Example — True case:**
+```python
+set_1 = {'a', 1, 3, 5}
+set_2 = {'a', 1}
+is_subset = set_2.issubset(set_1)
+print(is_subset)    # True  ✅ (all of set_2 is inside set_1)
+```
+ 
+**Example — False case:**
+```python
+set_1 = {4, 6}
+set_2 = {2, 6}
+is_subset = set_2.issubset(set_1)
+print(is_subset)    # False ❌ (2 is in set_2 but NOT in set_1)
+```
+ 
 ---
-
+ 
+## 10. issuperset()
+ 
+> Checks if one set **fully contains** another set — the opposite of issubset
+ 
+```
+  set_1 is the BIG circle, set_2 is the SMALL circle inside:
+ 
+  ┌─────────────────┐
+  │   set_1         │
+  │  3    5         │
+  │    ┌───────┐    │
+  │    │ set_2 │    │
+  │    │ 'a' 1 │    │
+  │    └───────┘    │
+  └─────────────────┘
+  set_1 is SUPERSET of set_2 → True ✅
+```
+ 
+> 💡 **Subset vs Superset — same relationship, different perspective:**
+> - `set_2.issubset(set_1)` → asking from set_2's view: "Am I inside set_1?"
+> - `set_1.issuperset(set_2)` → asking from set_1's view: "Do I contain set_2?"
+> Both give the same answer!
+ 
+**Syntax:** `set_1.issuperset(set_2)`
+ 
+**Example — True case:**
+```python
+set_1 = {'a', 1, 3, 5}
+set_2 = {'a', 1}
+is_superset = set_1.issuperset(set_2)
+print(is_superset)   # True  ✅ (set_1 fully contains set_2)
+```
+ 
+**Example — False case:**
+```python
+set_1 = {4, 6}
+set_2 = {2, 6}
+is_superset = set_1.issuperset(set_2)
+print(is_superset)   # False ❌ (set_1 doesn't contain 2)
+```
+ 
+---
+ 
+## 11. isdisjoint()
+ 
+> Checks if two sets have **absolutely no common elements**
+ 
+```
+  True case — circles completely SEPARATE (no overlap):
+ 
+  ( set_1 )    ( set_2 )
+  {  3, 5 }    { 'a', 1 }
+  no shared elements → True ✅
+ 
+  False case — circles OVERLAPPING:
+ 
+  ( set_1  ( 6 )  set_2 )
+  {4,  6 }  ↑  { 2, 6 }
+             6 is common → False ❌
+```
+ 
+**Syntax:** `set_1.isdisjoint(set_2)`
+ 
+**Example — True case:**
+```python
+set_a = {1, 2}
+set_b = {3, 4}
+is_disjoint = set_a.isdisjoint(set_b)
+print(is_disjoint)   # True  ✅ (no common elements)
+```
+ 
+**Example — False case:**
+```python
+set_1 = {4, 6}
+set_2 = {2, 6}
+is_disjoint = set_1.isdisjoint(set_2)
+print(is_disjoint)   # False ❌ (6 is common to both)
+```
+ 
+---
+ 
+## 12. Subset vs Superset vs Disjoint — Side by Side
+ 
+```
+  SUBSET:          SUPERSET:        DISJOINT:
+  ┌──────────┐     ┌──────────┐     ( A )   ( B )
+  │  set_1   │     │  set_1   │     {3,5}   {'a',1}
+  │  ┌────┐  │     │  ┌────┐  │
+  │  │set2│  │     │  │set2│  │     No overlap at all
+  │  └────┘  │     │  └────┘  │
+  └──────────┘     └──────────┘
+  set2 inside      set1 is the
+  set1 → True      big one → True
+```
+ 
+| Method | Question it answers | True when |
+|--------|-------------------|-----------|
+| `set2.issubset(set1)` | Is set2 inside set1? | set2 ⊆ set1 |
+| `set1.issuperset(set2)` | Does set1 contain set2? | set1 ⊇ set2 |
+| `set1.isdisjoint(set2)` | Do they share nothing? | set1 ∩ set2 = {} |
+ 
+---
+ 
 ## 🔑 Key Takeaways
-
-| Topic | Summary |
-|-------|---------|
-| **Union** `\|` | All elements from both sets |
-| **Intersection** `&` | Only common elements |
-| **Difference** `-` | Elements in first set, not in second |
-| **Symmetric Difference** `^` | All non-common elements (opposite of intersection) |
-| **issubset()** | Checks if one set is fully inside another |
-| **issuperset()** | Checks if one set fully contains another |
-| **isdisjoint()** | Checks if two sets have NO common elements |
-| **Method versions** | All operators have a method version that accepts any sequence |
+ 
+| Topic | Operator/Method | What it does |
+|-------|----------------|-------------|
+| **Union** | `\|` or `.union()` | All elements from both sets |
+| **Intersection** | `&` or `.intersection()` | Only common elements |
+| **Difference** | `-` or `.difference()` | Elements in first set only |
+| **Symmetric Difference** | `^` or `.symmetric_difference()` | All non-common elements |
+| **issubset()** | `set2.issubset(set1)` | Is set2 fully inside set1? |
+| **issuperset()** | `set1.issuperset(set2)` | Does set1 fully contain set2? |
+| **isdisjoint()** | `set1.isdisjoint(set2)` | Do sets share NO elements? |
+| **Method versions** | `.union()`, `.intersection()` etc. | Accept any sequence (list, tuple, string) |
+ 
